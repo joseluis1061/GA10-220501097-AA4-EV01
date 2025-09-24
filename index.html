@@ -1,0 +1,1411 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configuración de Servicios - GA10-220501097-AA4-EV01</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 50%, #2c3e50 100%);
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Navegación */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(44, 62, 80, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid #e74c3c;
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #e74c3c;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #ecf0f1;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+        }
+
+        .nav-link:hover {
+            color: #e74c3c;
+            background: rgba(231, 76, 60, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #e74c3c 100%);
+            color: white;
+            padding: 120px 0 80px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 20"><defs><radialGradient id="a" cx="50%" cy="40%" r="50%"><stop offset="0%" style="stop-color:rgba(255,255,255,0.1)"/><stop offset="100%" style="stop-color:rgba(255,255,255,0)"/></radialGradient></defs><rect width="100" height="20" fill="url(%23a)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .header h1 {
+            font-size: 3.2rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 4px 8px rgba(0,0,0,0.4);
+            animation: slideInDown 1s ease-out;
+        }
+
+        .header .subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            animation: slideInUp 1s ease-out 0.3s both;
+        }
+
+        .info-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem auto;
+            max-width: 900px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+
+        /* Contenido principal */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section {
+            background: white;
+            margin: 4rem 0;
+            padding: 4rem 2.5rem;
+            border-radius: 25px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.1);
+            transform: translateY(30px);
+            opacity: 0;
+            transition: all 0.6s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+        }
+
+        .section.visible {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .section h2 {
+            font-size: 2.8rem;
+            color: #2c3e50;
+            margin-bottom: 2rem;
+            text-align: center;
+            position: relative;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .section h2::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            margin: 1rem auto;
+            border-radius: 2px;
+        }
+
+        .section h3 {
+            color: #e74c3c;
+            font-size: 1.6rem;
+            margin: 2.5rem 0 1.5rem 0;
+            border-left: 5px solid #e74c3c;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .section p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            color: #555;
+            text-align: justify;
+            line-height: 1.8;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+            margin: 3rem 0;
+        }
+
+        .card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 2.5rem;
+            border-radius: 20px;
+            border-left: 6px solid #e74c3c;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(231, 76, 60, 0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.5s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            border-left-color: #c0392b;
+        }
+
+        .card:hover::before {
+            top: -10%;
+            right: -10%;
+        }
+
+        .card h4 {
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            font-size: 1.4rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .card p {
+            position: relative;
+            z-index: 2;
+        }
+
+        .card .icon {
+            font-size: 3rem;
+            color: #e74c3c;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            padding: 3rem;
+            border-radius: 20px;
+            margin: 3rem 0;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(231, 76, 60, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .highlight-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="20" cy="80" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="80" r="2" fill="rgba(255,255,255,0.1)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .highlight-box h3 {
+            border: none;
+            padding: 0;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 2;
+        }
+
+        .highlight-box p {
+            color: rgba(255,255,255,0.95);
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Lista de características */
+        .feature-list {
+            list-style: none;
+            padding: 0;
+            margin: 2rem 0;
+        }
+
+        .feature-list li {
+            padding: 1rem 0;
+            border-bottom: 1px solid #eee;
+            position: relative;
+            padding-left: 3rem;
+        }
+
+        .feature-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            top: 1rem;
+            color: #e74c3c;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .feature-list li:last-child {
+            border-bottom: none;
+        }
+
+        /* Tabla comparativa */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .comparison-table th {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: white;
+            padding: 1.5rem;
+            text-align: left;
+        }
+
+        .comparison-table td {
+            padding: 1.5rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        .comparison-table tr:hover {
+            background: rgba(231, 76, 60, 0.05);
+        }
+
+        /* Footer */
+        .footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 3rem 0;
+            margin-top: 4rem;
+            position: relative;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+        }
+
+        /* Responsivo */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+
+            .header h1 {
+                font-size: 2.2rem;
+            }
+
+            .section h2 {
+                font-size: 2.2rem;
+            }
+
+            .card-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .section {
+                padding: 2rem 1.5rem;
+            }
+        }
+
+        /* Animaciones */
+        @keyframes slideInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-on-scroll {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navegación -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">SENA - ADSO</div>
+            <ul class="nav-menu">
+                <li><a href="#inicio" class="nav-link">Inicio</a></li>
+                <li><a href="#introduccion" class="nav-link">Introducción</a></li>
+                <li><a href="#clusters" class="nav-link">Clústeres</a></li>
+                <li><a href="#riesgos" class="nav-link">Gestión de Riesgos</a></li>
+                <li><a href="#continuidad" class="nav-link">Continuidad</a></li>
+                <li><a href="#tecnologias" class="nav-link">Tecnologías</a></li>
+                <li><a href="#conclusion" class="nav-link">Conclusión</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header id="inicio" class="header">
+        <div class="header-content">
+            <h1>Configuración de Servicios</h1>
+            <p class="subtitle">Clústeres, Continuidad del Negocio y Gestión de Riesgos</p>
+            <p class="subtitle">GA10-220501097-AA4-EV01</p>
+            
+            <div class="info-card">
+                <h3>🎯 Información del Proyecto</h3>
+                <p><strong>Programa:</strong> Análisis y Desarrollo de Software (ADSO)</p>
+                <p><strong>Ficha:</strong> 2885494</p>
+                <p><strong>Estudiante:</strong> José Luis Zúñiga</p>
+                <p><strong>Instructor:</strong> Julián Loaiza</p>
+                <p><strong>Tipo:</strong> Evidencia de Conocimiento</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contenido Principal -->
+    <main class="container">
+        <!-- Introducción -->
+        <section id="introduccion" class="section">
+            <h2>🎯 Introducción</h2>
+            <p>Esta evidencia de conocimiento se centra en consolidar los conceptos generales relacionados con <strong>clústeres, análisis de riesgo, análisis de impacto, gestión de prioridad, recuperación de desastres, RPO y RTO, planes de continuidad del negocio, gestión de crisis y pruebas de operación</strong>.</p>
+            
+            <div class="highlight-box">
+                <h3>Componentes Clave del BCP</h3>
+                <ul class="feature-list">
+                    <li><strong>Análisis de Impacto de Negocio (BIA):</strong> Identifica procesos críticos y sus dependencias</li>
+                    <li><strong>Estrategias de Recuperación:</strong> Define métodos para restaurar operaciones</li>
+                    <li><strong>Planes de Comunicación:</strong> Protocolos para notificar stakeholders</li>
+                    <li><strong>Equipos de Respuesta:</strong> Roles y responsabilidades durante crisis</li>
+                    <li><strong>Procedimientos de Testing:</strong> Pruebas regulares de efectividad del plan</li>
+                </ul>
+            </div>
+
+            <h3>Gestión de Crisis</h3>
+            <p>La gestión de crisis requiere una respuesta coordinada y estructurada que incluye comunicación efectiva, toma de decisiones rápida y ejecución de planes predefinidos.</p>
+
+            <div class="card-grid">
+                <div class="card">
+                    <span class="icon">🚨</span>
+                    <h4>Detección y Alerta</h4>
+                    <p>Sistemas de monitoreo 24/7 que identifican automáticamente anomalías y activan protocolos de respuesta inmediata.</p>
+                </div>
+                <div class="card">
+                    <span class="icon">📞</span>
+                    <h4>Comunicación de Crisis</h4>
+                    <p>Canales dedicados para notificar equipos, stakeholders, clientes y autoridades según protocolos establecidos.</p>
+                </div>
+                <div class="card">
+                    <span class="icon">🎯</span>
+                    <h4>Coordinación de Respuesta</h4>
+                    <p>Centro de comando que coordina actividades de recuperación, asigna recursos y toma decisiones estratégicas.</p>
+                </div>
+                <div class="card">
+                    <span class="icon">📊</span>
+                    <h4>Documentación y Aprendizaje</h4>
+                    <p>Registro detallado de eventos, decisiones y lecciones aprendidas para mejorar futuros planes.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tecnologías -->
+        <section id="tecnologias" class="section">
+            <h2>🔧 Tecnologías y Herramientas</h2>
+            
+            <h3>Plataformas de Orquestación</h3>
+            <div class="card-grid">
+                <div class="card">
+                    <h4>🐳 Docker Swarm</h4>
+                    <p><strong>Orquestación nativa de Docker:</strong> Manejo simplificado de clústeres de contenedores con balanceo automático y service discovery integrado.</p>
+                    <ul class="feature-list">
+                        <li>Auto-scaling horizontal de servicios</li>
+                        <li>Rolling updates sin downtime</li>
+                        <li>Service mesh integrado</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>☸️ Kubernetes</h4>
+                    <p><strong>Plataforma líder en orquestación:</strong> Sistema completo para despliegue, gestión y escalamiento de aplicaciones containerizadas.</p>
+                    <ul class="feature-list">
+                        <li>Gestión declarativa de recursos</li>
+                        <li>Persistent volumes para datos</li>
+                        <li>Network policies avanzadas</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>🌊 Apache Mesos</h4>
+                    <p><strong>Kernel de sistemas distribuidos:</strong> Abstracción de recursos de CPU, memoria, almacenamiento a través de múltiples servidores.</p>
+                    <ul class="feature-list">
+                        <li>Multi-tenant resource sharing</li>
+                        <li>Framework agnóstico</li>
+                        <li>High availability nativo</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>Soluciones de Backup y Recuperación</h3>
+            <div class="card-grid">
+                <div class="card">
+                    <h4>💾 Veeam Backup & Replication</h4>
+                    <p><strong>Backup empresarial:</strong> Solución integral para backup, replicación y recuperación de VMs y datos físicos.</p>
+                </div>
+                <div class="card">
+                    <h4>☁️ AWS Disaster Recovery</h4>
+                    <p><strong>DR en la nube:</strong> Servicios como AWS Backup, Site Recovery y CloudEndure para recuperación automática.</p>
+                </div>
+                <div class="card">
+                    <h4>🔄 Zerto</h4>
+                    <p><strong>Replicación continua:</strong> Plataforma para replicación en tiempo real y recuperación de desastres multi-cloud.</p>
+                </div>
+                <div class="card">
+                    <h4>🛡️ Commvault Complete</h4>
+                    <p><strong>Gestión de datos:</strong> Suite completa para backup, archivado, analytics y compliance de datos empresariales.</p>
+                </div>
+            </div>
+
+            <h3>Herramientas de Monitoreo y Alertas</h3>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Herramienta</th>
+                        <th>Especialidad</th>
+                        <th>Características Clave</th>
+                        <th>Casos de Uso</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Nagios XI</strong></td>
+                        <td>Monitoreo de infraestructura</td>
+                        <td>Alertas personalizables, plugins extensos</td>
+                        <td>Servidores, servicios, red</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Prometheus + Grafana</strong></td>
+                        <td>Métricas y visualización</td>
+                        <td>Time-series DB, dashboards interactivos</td>
+                        <td>Microservicios, contenedores</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Splunk Enterprise</strong></td>
+                        <td>Análisis de logs</td>
+                        <td>Machine learning, SIEM integrado</td>
+                        <td>Seguridad, troubleshooting</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Datadog</strong></td>
+                        <td>Observabilidad full-stack</td>
+                        <td>APM, logs, infraestructura unificada</td>
+                        <td>Aplicaciones cloud-native</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Ventajas y Desventajas de Arquitecturas de Clúster</h3>
+            
+            <div class="card-grid">
+                <div class="card">
+                    <span class="icon">✅</span>
+                    <h4>Ventajas</h4>
+                    <ul class="feature-list">
+                        <li><strong>Alta disponibilidad:</strong> Uptime del 99.9% o superior</li>
+                        <li><strong>Escalabilidad horizontal:</strong> Adición dinámica de nodos</li>
+                        <li><strong>Tolerancia a fallos:</strong> Continuidad ante fallos de hardware</li>
+                        <li><strong>Balanceeo automático:</strong> Distribución eficiente de cargas</li>
+                        <li><strong>ROI mejorado:</strong> Mejor utilización de recursos</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <span class="icon">⚠️</span>
+                    <h4>Desventajas</h4>
+                    <ul class="feature-list">
+                        <li><strong>Complejidad técnica:</strong> Configuración y mantenimiento complejos</li>
+                        <li><strong>Costos iniciales altos:</strong> Inversión significativa en infraestructura</li>
+                        <li><strong>Latencia de red:</strong> Comunicación entre nodos introduce delays</li>
+                        <li><strong>Single points of failure:</strong> Switches, almacenamiento compartido</li>
+                        <li><strong>Capacitación requerida:</strong> Personal especializado necesario</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pruebas de Operación -->
+        <section id="pruebas" class="section">
+            <h2>🧪 Pruebas de Operación y Validación</h2>
+            
+            <h3>Tipos de Pruebas</h3>
+            <p>Las pruebas de operación son fundamentales para validar la efectividad de los planes de continuidad y la robustez de las arquitecturas implementadas.</p>
+
+            <div class="card-grid">
+                <div class="card">
+                    <span class="icon">🔍</span>
+                    <h4>Pruebas de Failover</h4>
+                    <p>Simulan fallos de componentes críticos para verificar que los mecanismos de conmutación automática funcionen correctamente y dentro de los RTO establecidos.</p>
+                </div>
+                <div class="card">
+                    <span class="icon">📈</span>
+                    <h4>Pruebas de Carga</h4>
+                    <p>Evalúan el comportamiento del clúster bajo condiciones de alta demanda para identificar cuellos de botella y puntos de saturación.</p>
+                </div>
+                <div class="card">
+                    <span class="icon">🔄</span>
+                    <h4>Pruebas de Recuperación</h4>
+                    <p>Validan la capacidad de restaurar servicios desde backups dentro de los RPO/RTO establecidos, incluyendo integridad de datos.</p>
+                </div>
+                <div class="card">
+                    <span class="icon">🎭</span>
+                    <h4>Simulacros de Desastre</h4>
+                    <p>Ejercicios integrales que involucran todos los equipos y procedimientos para validar la respuesta organizacional completa.</p>
+                </div>
+            </div>
+
+            <h3>Métricas de Validación</h3>
+            <div class="highlight-box">
+                <h3>KPIs Críticos para Monitoreo</h3>
+                <ul class="feature-list">
+                    <li><strong>MTBF (Mean Time Between Failures):</strong> Tiempo promedio entre fallos</li>
+                    <li><strong>MTTR (Mean Time To Recovery):</strong> Tiempo promedio de recuperación</li>
+                    <li><strong>Availability:</strong> Porcentaje de tiempo operativo (99.9%, 99.95%, 99.99%)</li>
+                    <li><strong>Throughput:</strong> Transacciones procesadas por unidad de tiempo</li>
+                    <li><strong>Response Time:</strong> Tiempo de respuesta bajo diferentes cargas</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Conclusión -->
+        <section id="conclusion" class="section">
+            <h2>🎯 Conclusiones</h2>
+            
+            <p>La implementación de arquitecturas de clústeres y estrategias de continuidad del negocio representa una inversión crítica para organizaciones que dependen de servicios de TI de alta disponibilidad. Los conceptos analizados demuestran que la preparación proactiva ante fallos y desastres no es opcional en el entorno empresarial actual.</p>
+
+            <div class="highlight-box">
+                <h3>Principales Hallazgos</h3>
+                <p>Los clústeres modernos, especialmente aquellos basados en contenedores y orquestación cloud-native, ofrecen flexibilidad sin precedentes para escalamiento y recuperación automática. Sin embargo, requieren expertise técnico significativo y inversión en herramientas de monitoreo y gestión especializadas.</p>
+            </div>
+
+            <h3>Recomendaciones Estratégicas</h3>
+            <div class="card-grid">
+                <div class="card">
+                    <h4>🎯 Enfoque Gradual</h4>
+                    <p>Implementar clústeres comenzando con aplicaciones no críticas para desarrollar expertise antes de migrar servicios de misión crítica.</p>
+                </div>
+                <div class="card">
+                    <h4>📊 Monitoreo Proactivo</h4>
+                    <p>Invertir en herramientas de observabilidad que proporcionen visibilidad completa del estado y rendimiento del clúster.</p>
+                </div>
+                <div class="card">
+                    <h4>🔄 Testing Continuo</h4>
+                    <p>Establecer ciclos regulares de pruebas de failover, recuperación y simulacros para mantener la efectividad de los planes.</p>
+                </div>
+                <div class="card">
+                    <h4>👥 Capacitación del Personal</h4>
+                    <p>Desarrollar competencias técnicas del equipo en tecnologías de clústeres y procedimientos de respuesta ante crisis.</p>
+                </div>
+            </div>
+
+            <p>La evolución hacia arquitecturas distribuidas y cloud-native continuará transformando la manera en que las organizaciones abordan la alta disponibilidad y recuperación de desastres. El dominio de estos conceptos es fundamental para profesionales en Análisis y Desarrollo de Software que busquen diseñar y mantener sistemas resilientes y escalables.</p>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 SENA - Análisis y Desarrollo de Software</p>
+            <p>GA10-220501097-AA4-EV01 | Ficha 2885494 | Instructor: Julián Loaiza</p>
+        </div>
+    </footer>
+
+    <script>
+        // Navegación suave
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                const offsetTop = targetElement.offsetTop - 100;
+
+                window.scrollTo({
+                    top: offsetTop,
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Animación al hacer scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Efecto parallax para el header
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const header = document.querySelector('.header');
+            const navbar = document.querySelector('.navbar');
+            
+            // Efecto parallax en header
+            if (header) {
+                header.style.transform = `translateY(${scrolled * 0.5}px)`;
+            }
+            
+            // Cambio de navbar al hacer scroll
+            if (scrolled > 100) {
+                navbar.style.background = 'rgba(44, 62, 80, 0.98)';
+                navbar.style.boxShadow = '0 2px 20px rgba(0,0,0,0.3)';
+            } else {
+                navbar.style.background = 'rgba(44, 62, 80, 0.95)';
+                navbar.style.boxShadow = 'none';
+            }
+        });
+
+        // Highlight de navegación activa
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('.section');
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            let currentSection = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 150;
+                const sectionHeight = section.clientHeight;
+                if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
+                    currentSection = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.style.color = '#ecf0f1';
+                link.style.background = 'transparent';
+                if (link.getAttribute('href') === '#' + currentSection) {
+                    link.style.color = '#e74c3c';
+                    link.style.background = 'rgba(231, 76, 60, 0.1)';
+                }
+            });
+        });
+
+        // Animación de cards al hacer hover
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-8px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Loading animation para las tablas
+        document.querySelectorAll('.comparison-table tbody tr').forEach((row, index) => {
+            row.style.opacity = '0';
+            row.style.transform = 'translateX(-20px)';
+            
+            setTimeout(() => {
+                row.style.transition = 'all 0.5s ease';
+                row.style.opacity = '1';
+                row.style.transform = 'translateX(0)';
+            }, index * 100);
+        });
+    </script>
+</body>
+</html>box">
+                <h3>🚀 Objetivo Principal</h3>
+                <p>Desarrollar un informe técnico que especifique herramientas y tecnologías utilizadas en arquitecturas de clústeres, analizando sus características, tipos, procesamiento, ventajas y desventajas en el contexto de la continuidad del negocio y gestión de riesgos.</p>
+            </div>
+
+            <p>En el entorno empresarial actual, la <strong>alta disponibilidad</strong> y la <strong>continuidad del negocio</strong> son aspectos críticos que determinan el éxito operacional de las organizaciones. Los clústeres de servidores representan una tecnología fundamental para garantizar que los servicios críticos permanezcan disponibles ante fallos de hardware, software o desastres naturales.</p>
+        </section>
+
+        <!-- Clústeres -->
+        <section id="clusters" class="section">
+            <h2>🖥️ Arquitecturas de Clústeres</h2>
+            
+            <h3>Definición y Conceptos Fundamentales</h3>
+            <p>Un <strong>clúster</strong> es un conjunto de computadoras interconectadas que trabajan de manera coordinada como si fueran un único sistema. Esta arquitectura proporciona mayor capacidad de procesamiento, alta disponibilidad y tolerancia a fallos.</p>
+
+            <div class="card-grid">
+                <div class="card">
+                    <span class="icon">🔄</span>
+                    <h4>Alta Disponibilidad (HA)</h4>
+                    <p>Garantizan que los servicios permanezcan operativos incluso cuando algunos nodos fallan. Típicamente ofrecen disponibilidad del 99.9% o superior.</p>
+                </div>
+                <div class="card">
+                    <span class="icon">📊</span>
+                    <h4>Balanceeo de Carga</h4>
+                    <p>Distribuyen el trabajo entre múltiples nodos para optimizar el rendimiento y evitar sobrecargas en componentes individuales.</p>
+                </div>
+                <div class="card">
+                    <span class="icon">🛡️</span>
+                    <h4>Tolerancia a Fallos</h4>
+                    <p>Continúan operando parcial o totalmente cuando uno o más componentes presentan fallos, manteniendo la integridad del servicio.</p>
+                </div>
+                <div class="card">
+                    <span class="icon">⚡</span>
+                    <h4>Escalabilidad</h4>
+                    <p>Permiten agregar o quitar nodos dinámicamente para adaptarse a las demandas cambiantes de procesamiento.</p>
+                </div>
+            </div>
+
+            <h3>Tipos de Clústeres</h3>
+            
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Tipo de Clúster</th>
+                        <th>Propósito Principal</th>
+                        <th>Características</th>
+                        <th>Casos de Uso</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Failover Cluster</strong></td>
+                        <td>Alta Disponibilidad</td>
+                        <td>Redundancia activa/pasiva, failover automático</td>
+                        <td>Bases de datos críticas, servicios web</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Load Balancing</strong></td>
+                        <td>Distribución de Carga</td>
+                        <td>Múltiples nodos activos, distribución inteligente</td>
+                        <td>Servidores web, aplicaciones distribuidas</td>
+                    </tr>
+                    <tr>
+                        <td><strong>HPC (High Performance)</strong></td>
+                        <td>Procesamiento Paralelo</td>
+                        <td>Computación distribuida, alto throughput</td>
+                        <td>Simulaciones científicas, análisis de big data</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Storage Cluster</strong></td>
+                        <td>Almacenamiento Distribuido</td>
+                        <td>Replicación de datos, acceso concurrente</td>
+                        <td>Sistemas de archivos distribuidos, backup</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Tecnologías y Herramientas</h3>
+            <div class="card-grid">
+                <div class="card">
+                    <h4>🐳 Kubernetes</h4>
+                    <p><strong>Orquestación de contenedores:</strong> Gestiona clústeres de contenedores Docker con auto-scaling, self-healing y service discovery automático.</p>
+                </div>
+                <div class="card">
+                    <h4>🖥️ VMware vSphere HA</h4>
+                    <p><strong>Virtualización:</strong> Proporciona alta disponibilidad para máquinas virtuales con detección automática de fallos y reinicio de VMs.</p>
+                </div>
+                <div class="card">
+                    <h4>🔧 Apache Spark</h4>
+                    <p><strong>Procesamiento distribuido:</strong> Framework para procesamiento de big data en clústeres con capacidades de machine learning integradas.</p>
+                </div>
+                <div class="card">
+                    <h4>🗄️ MongoDB Replica Set</h4>
+                    <p><strong>Base de datos distribuida:</strong> Proporciona redundancia y alta disponibilidad con replicación automática entre nodos.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gestión de Riesgos -->
+        <section id="riesgos" class="section">
+            <h2>⚠️ Análisis de Riesgos e Impacto</h2>
+            
+            <h3>Metodología de Análisis de Riesgos</h3>
+            <p>El análisis de riesgos en infraestructuras de TI requiere una evaluación sistemática de amenazas, vulnerabilidades y impactos potenciales en los servicios críticos del negocio.</p>
+
+            <div class="card-grid">
+                <div class="card">
+                    <span class="icon">🎯</span>
+                    <h4>Identificación de Amenazas</h4>
+                    <p>Fallos de hardware, ataques cibernéticos, desastres naturales, errores humanos, fallos de software y problemas de conectividad.</p>
+                </div>
+                <div class="card">
+                    <span class="icon">🔍</span>
+                    <h4>Análisis de Vulnerabilidades</h4>
+                    <p>Evaluación de puntos débiles en la infraestructura, configuraciones inseguras, falta de redundancia y dependencias críticas.</p>
+                </div>
+                <div class="card">
+                    <span class="icon">📈</span>
+                    <h4>Evaluación de Impacto</h4>
+                    <p>Cuantificación de pérdidas financieras, daño reputacional, incumplimiento regulatorio y interrupción operacional.</p>
+                </div>
+                <div class="card">
+                    <span class="icon">🛠️</span>
+                    <h4>Estrategias de Mitigación</h4>
+                    <p>Implementación de controles preventivos, detectivos y correctivos para reducir la probabilidad e impacto de los riesgos.</p>
+                </div>
+            </div>
+
+            <h3>Matriz de Riesgos</h3>
+            <div class="highlight-box">
+                <h3>Clasificación por Impacto y Probabilidad</h3>
+                <ul class="feature-list">
+                    <li><strong>Crítico:</strong> Impacto alto + Probabilidad alta → Acción inmediata requerida</li>
+                    <li><strong>Alto:</strong> Impacto alto + Probabilidad media → Plan de mitigación prioritario</li>
+                    <li><strong>Medio:</strong> Impacto medio + Probabilidad media → Monitoreo continuo</li>
+                    <li><strong>Bajo:</strong> Impacto bajo + Probabilidad baja → Revisión periódica</li>
+                </ul>
+            </div>
+
+            <h3>Gestión de Prioridades</h3>
+            <p>La priorización de servicios se basa en el <strong>análisis de criticidad del negocio</strong>, considerando factores como impacto financiero, requisitos regulatorios, dependencias de procesos y expectativas de los stakeholders.</p>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Nivel de Prioridad</th>
+                        <th>Tiempo de Respuesta</th>
+                        <th>Recursos Asignados</th>
+                        <th>Ejemplos de Servicios</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Crítica (P1)</strong></td>
+                        <td>< 15 minutos</td>
+                        <td>Equipo completo 24/7</td>
+                        <td>Core banking, e-commerce, ERP</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Alta (P2)</strong></td>
+                        <td>< 2 horas</td>
+                        <td>Especialistas disponibles</td>
+                        <td>CRM, herramientas colaborativas</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Media (P3)</strong></td>
+                        <td>< 8 horas</td>
+                        <td>Horario laboral</td>
+                        <td>Reportes, aplicaciones internas</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Baja (P4)</strong></td>
+                        <td>< 72 horas</td>
+                        <td>Recursos cuando disponibles</td>
+                        <td>Aplicaciones de desarrollo, testing</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Continuidad del Negocio -->
+        <section id="continuidad" class="section">
+            <h2>🔄 Continuidad del Negocio y Recuperación</h2>
+            
+            <h3>RPO y RTO: Métricas Críticas</h3>
+            <p>El <strong>Recovery Point Objective (RPO)</strong> y <strong>Recovery Time Objective (RTO)</strong> son métricas fundamentales que definen los límites aceptables de pérdida de datos y tiempo de inactividad.</p>
+
+            <div class="card-grid">
+                <div class="card">
+                    <span class="icon">⏱️</span>
+                    <h4>RPO (Recovery Point Objective)</h4>
+                    <p><strong>Pérdida máxima de datos aceptable:</strong> Define cuántos datos la organización puede permitirse perder sin impacto crítico en el negocio. Ejemplo: RPO de 15 minutos significa máximo 15 min de datos perdidos.</p>
+                </div>
+                <div class="card">
+                    <span class="icon">⏰</span>
+                    <h4>RTO (Recovery Time Objective)</h4>
+                    <p><strong>Tiempo máximo de recuperación:</strong> Define cuánto tiempo puede estar inactivo un sistema antes de causar daño significativo al negocio. Ejemplo: RTO de 4 horas para recuperación completa.</p>
+                </div>
+            </div>
+
+            <h3>Estrategias de Recuperación de Desastres</h3>
+            
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Estrategia</th>
+                        <th>RPO</th>
+                        <th>RTO</th>
+                        <th>Costo</th>
+                        <th>Descripción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Hot Site</strong></td>
+                        <td>Segundos/Minutos</td>
+                        <td>Minutos/Horas</td>
+                        <td>Alto</td>
+                        <td>Site secundario completamente equipado y sincronizado</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Warm Site</strong></td>
+                        <td>Minutos/Horas</td>
+                        <td>Horas/Días</td>
+                        <td>Medio</td>
+                        <td>Infraestructura parcial, requiere configuración</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Cold Site</strong></td>
+                        <td>Horas/Días</td>
+                        <td>Días/Semanas</td>
+                        <td>Bajo</td>
+                        <td>Solo facilidades físicas, equipos por instalar</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Cloud DR</strong></td>
+                        <td>Variable</td>
+                        <td>Variable</td>
+                        <td>Escalable</td>
+                        <td>Recuperación basada en servicios cloud</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Plan de Continuidad del Negocio (BCP)</h3>
+            <p>El BCP es un documento integral que define procedimientos y estrategias para mantener operaciones críticas durante y después de una interrupción significativa.</p>
+
+            <div class="highlight-box">
+                <h3>Componentes Clave del BCP</h3>
+                <ul class="feature-list">
+                    <li><strong>Análisis de Impacto de Negocio (BIA):</strong> Identifica procesos críticos y sus dependencias</li>
+                    <li><strong>Estrategias de Recuperación:</strong> Define métodos para restaurar operaciones</li>
+                    <li><strong>Planes de Comunicación:</strong> Protocolos para notificar stakeholders</li>
+                    <li><strong>Equipos de Respuesta:</strong> Roles y responsabilidades durante crisis</li>
+                    <li><strong>Procedimientos de Testing:</strong> Pruebas regulares de efectividad del plan</li>
+                </ul>
+            </div>
+
+            <h3>Gestión de Crisis</h3>
+            <p>La gestión de crisis requiere una respuesta coordinada y estructurada que incluye comunicación efectiva, toma de decisiones rápida y ejecución de planes predefinidos.</p>
+
+            <div class="card-grid">
+                <div class="card">
+                    <span class="icon">🚨</span>
+                    <h4>Detección y Alerta</h4>
+                    <p>Sistemas de monitoreo 24/7 que identifican automáticamente anomalías y activan protocolos de respuesta inmediata.</p>
+                </div>
+                <div class="card">
+                    <span class="icon">📞</span>
+                    <h4>Comunicación de Crisis</h4>
+                    <p>Canales dedicados para notificar equipos, stakeholders, clientes y autoridades según protocolos establecidos.</p>
+                </div>
+                <div class="card">
+                    <span class="icon">🎯</span>
+                    <h4>Coordinación de Respuesta</h4>
+                    <p>Centro de comando que coordina actividades de recuperación, asigna recursos y toma decisiones estratégicas.</p>
+                </div>
+                <div class="card">
+                    <span class="icon">📊</span>
+                    <h4>Documentación y Aprendizaje</h4>
+                    <p>Registro detallado de eventos, decisiones y lecciones aprendidas para mejorar futuros planes.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tecnologías -->
+        <section id="tecnologias" class="section">
+            <h2>🔧 Tecnologías y Herramientas</h2>
+            
+            <h3>Plataformas de Orquestación</h3>
+            <div class="card-grid">
+                <div class="card">
+                    <h4>🐳 Docker Swarm</h4>
+                    <p><strong>Orquestación nativa de Docker:</strong> Manejo simplificado de clústeres de contenedores con balanceo automático y service discovery integrado.</p>
+                    <ul class="feature-list">
+                        <li>Auto-scaling horizontal de servicios</li>
+                        <li>Rolling updates sin downtime</li>
+                        <li>Service mesh integrado</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>☸️ Kubernetes</h4>
+                    <p><strong>Plataforma líder en orquestación:</strong> Sistema completo para despliegue, gestión y escalamiento de aplicaciones containerizadas.</p>
+                    <ul class="feature-list">
+                        <li>Gestión declarativa de recursos</li>
+                        <li>Persistent volumes para datos</li>
+                        <li>Network policies avanzadas</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>🌊 Apache Mesos</h4>
+                    <p><strong>Kernel de sistemas distribuidos:</strong> Abstracción de recursos de CPU, memoria, almacenamiento a través de múltiples servidores.</p>
+                    <ul class="feature-list">
+                        <li>Multi-tenant resource sharing</li>
+                        <li>Framework agnóstico</li>
+                        <li>High availability nativo</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>Soluciones de Backup y Recuperación</h3>
+            <div class="card-grid">
+                <div class="card">
+                    <h4>💾 Veeam Backup & Replication</h4>
+                    <p><strong>Backup empresarial:</strong> Solución integral para backup, replicación y recuperación de VMs y datos físicos.</p>
+                </div>
+                <div class="card">
+                    <h4>☁️ AWS Disaster Recovery</h4>
+                    <p><strong>DR en la nube:</strong> Servicios como AWS Backup, Site Recovery y CloudEndure para recuperación automática.</p>
+                </div>
+                <div class="card">
+                    <h4>🔄 Zerto</h4>
+                    <p><strong>Replicación continua:</strong> Plataforma para replicación en tiempo real y recuperación de desastres multi-cloud.</p>
+                </div>
+                <div class="card">
+                    <h4>🛡️ Commvault Complete</h4>
+                    <p><strong>Gestión de datos:</strong> Suite completa para backup, archivado, analytics y compliance de datos empresariales.</p>
+                </div>
+            </div>
+
+            <h3>Herramientas de Monitoreo y Alertas</h3>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Herramienta</th>
+                        <th>Especialidad</th>
+                        <th>Características Clave</th>
+                        <th>Casos de Uso</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Nagios XI</strong></td>
+                        <td>Monitoreo de infraestructura</td>
+                        <td>Alertas personalizables, plugins extensos</td>
+                        <td>Servidores, servicios, red</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Prometheus + Grafana</strong></td>
+                        <td>Métricas y visualización</td>
+                        <td>Time-series DB, dashboards interactivos</td>
+                        <td>Microservicios, contenedores</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Splunk Enterprise</strong></td>
+                        <td>Análisis de logs</td>
+                        <td>Machine learning, SIEM integrado</td>
+                        <td>Seguridad, troubleshooting</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Datadog</strong></td>
+                        <td>Observabilidad full-stack</td>
+                        <td>APM, logs, infraestructura unificada</td>
+                        <td>Aplicaciones cloud-native</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Ventajas y Desventajas de Arquitecturas de Clúster</h3>
+            
+            <div class="card-grid">
+                <div class="card">
+                    <span class="icon">✅</span>
+                    <h4>Ventajas</h4>
+                    <ul class="feature-list">
+                        <li><strong>Alta disponibilidad:</strong> Uptime del 99.9% o superior</li>
+                        <li><strong>Escalabilidad horizontal:</strong> Adición dinámica de nodos</li>
+                        <li><strong>Tolerancia a fallos:</strong> Continuidad ante fallos de hardware</li>
+                        <li><strong>Balanceeo automático:</strong> Distribución eficiente de cargas</li>
+                        <li><strong>ROI mejorado:</strong> Mejor utilización de recursos</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <span class="icon">⚠️</span>
+                    <h4>Desventajas</h4>
+                    <ul class="feature-list">
+                        <li><strong>Complejidad técnica:</strong> Configuración y mantenimiento complejos</li>
+                        <li><strong>Costos iniciales altos:</strong> Inversión significativa en infraestructura</li>
+                        <li><strong>Latencia de red:</strong> Comunicación entre nodos introduce delays</li>
+                        <li><strong>Single points of failure:</strong> Switches, almacenamiento compartido</li>
+                        <li><strong>Capacitación requerida:</strong> Personal especializado necesario</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pruebas de Operación -->
+        <section id="pruebas" class="section">
+            <h2>🧪 Pruebas de Operación y Validación</h2>
+            
+            <h3>Tipos de Pruebas</h3>
+            <p>Las pruebas de operación son fundamentales para validar la efectividad de los planes de continuidad y la robustez de las arquitecturas implementadas.</p>
+
+            <div class="card-grid">
+                <div class="card">
+                    <span class="icon">🔍</span>
+                    <h4>Pruebas de Failover</h4>
+                    <p>Simulan fallos de componentes críticos para verificar que los mecanismos de conmutación automática funcionen correctamente y dentro de los RTO establecidos.</p>
+                </div>
+                <div class="card">
+                    <span class="icon">📈</span>
+                    <h4>Pruebas de Carga</h4>
+                    <p>Evalúan el comportamiento del clúster bajo condiciones de alta demanda para identificar cuellos de botella y puntos de saturación.</p>
+                </div>
+                <div class="card">
+                    <span class="icon">🔄</span>
+                    <h4>Pruebas de Recuperación</h4>
+                    <p>Validan la capacidad de restaurar servicios desde backups dentro de los RPO/RTO establecidos, incluyendo integridad de datos.</p>
+                </div>
+                <div class="card">
+                    <span class="icon">🎭</span>
+                    <h4>Simulacros de Desastre</h4>
+                    <p>Ejercicios integrales que involucran todos los equipos y procedimientos para validar la respuesta organizacional completa.</p>
+                </div>
+            </div>
+
+            <h3>Métricas de Validación</h3>
+            <div class="highlight-box">
+                <h3>KPIs Críticos para Monitoreo</h3>
+                <ul class="feature-list">
+                    <li><strong>MTBF (Mean Time Between Failures):</strong> Tiempo promedio entre fallos</li>
+                    <li><strong>MTTR (Mean Time To Recovery):</strong> Tiempo promedio de recuperación</li>
+                    <li><strong>Availability:</strong> Porcentaje de tiempo operativo (99.9%, 99.95%, 99.99%)</li>
+                    <li><strong>Throughput:</strong> Transacciones procesadas por unidad de tiempo</li>
+                    <li><strong>Response Time:</strong> Tiempo de respuesta bajo diferentes cargas</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Conclusión -->
+        <section id="conclusion" class="section">
+            <h2>🎯 Conclusiones</h2>
+            
+            <p>La implementación de arquitecturas de clústeres y estrategias de continuidad del negocio representa una inversión crítica para organizaciones que dependen de servicios de TI de alta disponibilidad. Los conceptos analizados demuestran que la preparación proactiva ante fallos y desastres no es opcional en el entorno empresarial actual.</p>
+
+            <div class="highlight-box">
+                <h3>Principales Hallazgos</h3>
+                <p>Los clústeres modernos, especialmente aquellos basados en contenedores y orquestación cloud-native, ofrecen flexibilidad sin precedentes para escalamiento y recuperación automática. Sin embargo, requieren expertise técnico significativo y inversión en herramientas de monitoreo y gestión especializadas.</p>
+            </div>
+
+            <h3>Recomendaciones Estratégicas</h3>
+            <div class="card-grid">
+                <div class="card">
+                    <h4>🎯 Enfoque Gradual</h4>
+                    <p>Implementar clústeres comenzando con aplicaciones no críticas para desarrollar expertise antes de migrar servicios de misión crítica.</p>
+                </div>
+                <div class="card">
+                    <h4>📊 Monitoreo Proactivo</h4>
+                    <p>Invertir en herramientas de observabilidad que proporcionen visibilidad completa del estado y rendimiento del clúster.</p>
+                </div>
+                <div class="card">
+                    <h4>🔄 Testing Continuo</h4>
+                    <p>Establecer ciclos regulares de pruebas de failover, recuperación y simulacros para mantener la efectividad de los planes.</p>
+                </div>
+                <div class="card">
+                    <h4>👥 Capacitación del Personal</h4>
+                    <p>Desarrollar competencias técnicas del equipo en tecnologías de clústeres y procedimientos de respuesta ante crisis.</p>
+                </div>
+            </div>
+
+            <p>La evolución hacia arquitecturas distribuidas y cloud-native continuará transformando la manera en que las organizaciones abordan la alta disponibilidad y recuperación de desastres. El dominio de estos conceptos es fundamental para profesionales en Análisis y Desarrollo de Software que busquen diseñar y mantener sistemas resilientes y escalables.</p>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 SENA - Análisis y Desarrollo de Software</p>
+            <p>GA10-220501097-AA4-EV01 | Ficha 2885494 | Instructor: Julián Loaiza</p>
+        </div>
+    </footer>
+
+    <script>
+        // Navegación suave
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                const offsetTop = targetElement.offsetTop - 100;
+
+                window.scrollTo({
+                    top: offsetTop,
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+
+        document.querySelectorAll('.section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Efecto parallax para el header
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const header = document.querySelector('.header');
+            const navbar = document.querySelector('.navbar');
+            
+            // Efecto parallax en header
+            if (header) {
+                header.style.transform = `translateY(${scrolled * 0.5}px)`;
+            }
+            
+            // Cambio de navbar al hacer scroll
+            if (scrolled > 100) {
+                navbar.style.background = 'rgba(44, 62, 80, 0.98)';
+                navbar.style.boxShadow = '0 2px 20px rgba(0,0,0,0.3)';
+            } else {
+                navbar.style.background = 'rgba(44, 62, 80, 0.95)';
+                navbar.style.boxShadow = 'none';
+            }
+        });
+
+        // Highlight de navegación activa
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('.section');
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            let currentSection = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 150;
+                const sectionHeight = section.clientHeight;
+                if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
+                    currentSection = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.style.color = '#ecf0f1';
+                link.style.background = 'transparent';
+                if (link.getAttribute('href') === '#' + currentSection) {
+                    link.style.color = '#e74c3c';
+                    link.style.background = 'rgba(231, 76, 60, 0.1)';
+                }
+            });
+        });
+
+        // Animación de cards al hacer hover
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-8px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Loading animation para las tablas
+        document.querySelectorAll('.comparison-table tbody tr').forEach((row, index) => {
+            row.style.opacity = '0';
+            row.style.transform = 'translateX(-20px)';
+            
+            setTimeout(() => {
+                row.style.transition = 'all 0.5s ease';
+                row.style.opacity = '1';
+                row.style.transform = 'translateX(0)';
+            }, index * 100);
+        });
+    </script>
+</body>
+</html>
